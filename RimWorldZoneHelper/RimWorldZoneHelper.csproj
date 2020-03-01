@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <NoWarn>$(NoWarn);CA1303</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(RimWorldDir)\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(RimWorldDir)\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.0.0.8" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <Target Name="VerifyProperties" BeforeTargets="Build" Condition="'$(RimWorldDir)' == ''">
+    <!-- Set this in an external Directory.Build.props so it doesn't need to be commited to repo with your personal path. -->
+    <Error Text="The property RimWorldDir must be defined. It should be the full path to your installation of RimWorld. E.g. C:\Program Files (x86)\Steam\steamapps\common\RimWorld" />
+  </Target>
+
+  <Target Name="AssembleDrop" AfterTargets="Build">
+    <Message Importance="high" Text="Assemblying build drop..." />
+    <ItemGroup>
+      <AboutFiles Include="About\*" />
+      <Assemblies Include="$(OutDir)\*.dll" />
+    </ItemGroup>
+    <PropertyGroup>
+      <DropDir>$(RimWorldDir)\Mods\$(TargetName)</DropDir>
+    </PropertyGroup>
+    <Copy SourceFiles="@(AboutFiles)" DestinationFolder="$(DropDir)\About\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(Assemblies)" DestinationFolder="$(DropDir)\v1.1\Assemblies\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="LoadFolders.xml" DestinationFolder="$(DropDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>
