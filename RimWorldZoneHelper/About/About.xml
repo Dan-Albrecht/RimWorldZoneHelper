@@ -3,8 +3,8 @@
   <name>Zone Helper</name>
   <author>Dan Albrecht</author>
   <supportedVersions>
-    <li>1.1</li>
+    <li>1.2</li>
   </supportedVersions>
-  <packageId>albrecht.dan.zonehelper</packageId>
-  <description>Groups zones based on storage requirements.</description>
+  <packageId>Albrecht.Dan.ZoneHelper</packageId>
+  <description>Adds filters to zones based on storage requirements.</description>
 </ModMetaData>
