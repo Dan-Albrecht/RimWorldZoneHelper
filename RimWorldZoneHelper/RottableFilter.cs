@@ -15,14 +15,14 @@
             return thingDef.GetCompProperties<CompProperties_Rottable>() != null;
         }
 
-        public override bool Matches(Thing thing)
+        public override bool Matches(Thing t)
         {
-            if (thing == null)
+            if (t == null)
             {
                 return false;
             }
 
-            return Matches(thing.def);
+            return Matches(t.def);
         }
     }
 }
