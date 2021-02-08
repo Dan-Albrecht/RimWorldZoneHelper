@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "RimWorldZoneHelper": {
+      "commandName": "Executable",
+      "executablePath": "E:\\Games\\Steam\\steamapps\\common\\RimWorld\\RimWorldWin64.exe",
+      "commandLineArgs": "-quicktest",
+      "nativeDebugging": true
+    }
+  }
+}

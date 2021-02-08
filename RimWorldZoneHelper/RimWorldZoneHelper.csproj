@@ -20,6 +20,9 @@
       <HintPath>$(RimWorldDir)\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>E:\Games\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +59,7 @@
     <ItemGroup>
       <AboutFiles Include="About\*" />
       <Assemblies Include="$(OutDir)\*.dll" />
+      <Assemblies Include="$(OutDir)\*.pdb" />
     </ItemGroup>
     <PropertyGroup>
       <DropDir>$(RimWorldDir)\Mods\$(TargetName)</DropDir>

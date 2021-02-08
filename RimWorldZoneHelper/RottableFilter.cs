@@ -24,5 +24,15 @@
 
             return Matches(t.def);
         }
+
+        public override bool AlwaysMatches(ThingDef def)
+        {
+            return false;
+        }
+
+        public override bool CanEverMatch(ThingDef def)
+        {
+            return true;
+        }
     }
 }

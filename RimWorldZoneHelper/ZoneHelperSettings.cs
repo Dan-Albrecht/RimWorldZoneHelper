@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,15 +10,13 @@ namespace RimWorldZoneHelper
 {
     public class ZoneHelperSettings : ModSettings
     {
-#pragma warning disable CA1051 // Do not declare visible instance fields
-        public string Value = "Default Value";
-#pragma warning restore CA1051 // Do not declare visible instance fields
-
-        public static ZoneHelperSettings Instance { get; set; }
+        [SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "Everything wants refs to this, so just using a field")]
+        public bool HideBuiltinFilters = true;
 
         public override void ExposeData()
         {
-            Scribe_Values.Look(ref this.Value, "SomeLabel");
+            Log.Message(nameof(ExposeData));
+            Scribe_Values.Look(ref this.HideBuiltinFilters, nameof(HideBuiltinFilters));
             base.ExposeData();
         }
     }
