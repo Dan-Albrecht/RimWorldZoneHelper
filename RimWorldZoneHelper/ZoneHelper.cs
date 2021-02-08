@@ -9,7 +9,7 @@
     // %LOCALAPPDATA%Low\Ludeon Studios\RimWorld by Ludeon Studios\Player.log
     public class ZoneHelper : Mod
     {
-        private readonly ZoneHelperSettings settings;
+        public ZoneHelperSettings ModSettings { get; }
 
         public ZoneHelper(ModContentPack content) : base(content)
         {
@@ -23,8 +23,8 @@
                 return;
             }
 
-            this.settings = this.GetSettings<ZoneHelperSettings>();
-            CustomFilters.HideBuiltin = this.settings.HideBuiltinFilters;
+            this.ModSettings = this.GetSettings<ZoneHelperSettings>();
+            CustomFilters.HideBuiltin = this.ModSettings.HideBuiltinFilters;
 
             Log.Message($"Injecting {Assembly.GetExecutingAssembly().FullName}...");
             var harmony = new Harmony("Albrecht.Dan.ZoneHelper");
@@ -42,7 +42,7 @@
 
             listingStandard.CheckboxLabeled(
                 "Hide builtin filters",
-                ref this.settings.HideBuiltinFilters,
+                ref this.ModSettings.HideBuiltinFilters,
                 "A value indicating if we should hide or show the builting filter values. If hidden, the filters will all be set to selected to prevent having XXX.");
 
             listingStandard.End();
@@ -56,15 +56,10 @@
 
         public override void WriteSettings()
         {
-            Log.Message(nameof(WriteSettings));
-            this.settings.Write();
-
-            if (CustomFilters.HideBuiltin != this.settings.HideBuiltinFilters)
+            if (CustomFilters.HideBuiltin != this.ModSettings.HideBuiltinFilters)
             {
-                Log.Message($"Changed to {this.settings.HideBuiltinFilters}");
+                Log.Message($"Changed to {this.ModSettings.HideBuiltinFilters}");
             }
-
-            //Verse.AI.ReservationManager.
 
             base.WriteSettings();
         }

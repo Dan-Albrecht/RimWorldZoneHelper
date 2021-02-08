@@ -3,7 +3,6 @@
     "RimWorldZoneHelper": {
       "commandName": "Executable",
       "executablePath": "$(RimWorldDir)\\RimWorldWin64.exe",
-      "commandLineArgs": "-quicktest",
       "nativeDebugging": true
     }
   }

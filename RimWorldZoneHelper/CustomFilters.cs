@@ -14,11 +14,14 @@
         {
             foreach (SpecialThingFilterDef thingFilter in DefDatabase<SpecialThingFilterDef>.AllDefs)
             {
-                // We just want our filters to show to minimzed cluster. We cannot delete the builtin
-                // ones so just hide instead.
-                Log.Message($"{thingFilter} Default: {thingFilter.allowedByDefault} Config: {thingFilter.configurable} def: {thingFilter.defName} Desc: {thingFilter.description} label: {thingFilter.label} Parent {thingFilter.parentCategory}  Generated: {thingFilter.generated} SaveKey: {thingFilter.saveKey} Worker {thingFilter.workerClass}");
+                if (thingFilter.saveKey == "allowRotten" || thingFilter.saveKey == "allowFresh")
+                {
+                    // We just want our filters to show to minimzed cluster. We cannot delete the builtin
+                    // ones so just hide instead.
+                    Log.Message($"{thingFilter} Default: {thingFilter.allowedByDefault} Config: {thingFilter.configurable} def: {thingFilter.defName} Desc: {thingFilter.description} label: {thingFilter.label} Parent {thingFilter.parentCategory}  Generated: {thingFilter.generated} SaveKey: {thingFilter.saveKey} Worker {thingFilter.workerClass}");
 
-                //thingFilter.configurable = false;
+                    thingFilter.configurable = !ZoneHelper.Instnace.ModSettings.HideBuiltinFilters;
+                }
             }
 
 
