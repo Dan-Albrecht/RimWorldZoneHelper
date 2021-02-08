@@ -8,32 +8,39 @@
     [HarmonyPatch(typeof(ThingCategoryNodeDatabase), "FinalizeInit")]
     public static class CustomFilters
     {
-        public static bool HideBuiltin { get; set; }
+        private static SpecialThingFilterDef rottenFilter;
+        private static SpecialThingFilterDef freshFilter;
 
         public static void Prefix()
         {
             foreach (SpecialThingFilterDef thingFilter in DefDatabase<SpecialThingFilterDef>.AllDefs)
             {
-                if (thingFilter.saveKey == "allowRotten" || thingFilter.saveKey == "allowFresh")
+                // Cannot delete the builtin as the core game expect them to always exist
+                if (thingFilter.saveKey == "allowRotten")
                 {
-                    // We just want our filters to show to minimzed cluster. We cannot delete the builtin
-                    // ones so just hide instead.
-                    Log.Message($"{thingFilter} Default: {thingFilter.allowedByDefault} Config: {thingFilter.configurable} def: {thingFilter.defName} Desc: {thingFilter.description} label: {thingFilter.label} Parent {thingFilter.parentCategory}  Generated: {thingFilter.generated} SaveKey: {thingFilter.saveKey} Worker {thingFilter.workerClass}");
-
-                    thingFilter.configurable = !ZoneHelper.Instnace.ModSettings.HideBuiltinFilters;
+                    rottenFilter = thingFilter;
+                }
+                else if (thingFilter.saveKey == "allowFresh")
+                {
+                    freshFilter = thingFilter;
                 }
             }
-
 
             ThingCategoryDef rootCategory = ThingCategoryDefOf.Root;
 
             AddFilter(rootCategory, "AllowFrozen", "Things that must be frozen to last indefinitely", "must be frozen & covered", "allowFrozen", typeof(RottableFilter));
             AddFilter(rootCategory, "AllowCovered", "Things that must be covered to last indefinitely", "must be convered", "allowCovered", typeof(MustCoverDoesntRot));
-            AddFilter(rootCategory, "AllowAnywhere", "Things that can be placed anywhere and will last indefinitely", "no storage restrictions", "allowAnywhere", typeof(DoesntRotDoesntNeedCover));
+            AddFilter(rootCategory, "AllowAnywhere", "Things that can be placed anywhere and will last indefinitely or are already ruined (rotten / desicated)", "no storage restrictions", "allowAnywhere", typeof(DoesntRotDoesntNeedCover));
 
+            SetHidden(ZoneHelper.Instnace.ModSettings.HideBuiltinFilters);
+        }
+
+        internal static void SetHidden(bool currentHide)
+        {
+            Log.Message($"Hidden is now {currentHide}");
+            rottenFilter.configurable = !currentHide;
+            freshFilter.configurable = !currentHide;
             DefDatabase<SpecialThingFilterDef>.ErrorCheckAllDefs();
-
-            //var x = new Zone_Stockpile();
         }
 
         public static void Postfix()

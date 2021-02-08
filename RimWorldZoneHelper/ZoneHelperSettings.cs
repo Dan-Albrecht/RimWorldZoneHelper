@@ -15,7 +15,6 @@ namespace RimWorldZoneHelper
 
         public override void ExposeData()
         {
-            Log.Message(nameof(ExposeData));
             Scribe_Values.Look(ref this.HideBuiltinFilters, nameof(HideBuiltinFilters));
             base.ExposeData();
         }

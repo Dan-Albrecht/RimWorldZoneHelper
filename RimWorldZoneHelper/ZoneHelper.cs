@@ -10,6 +10,7 @@
     public class ZoneHelper : Mod
     {
         public ZoneHelperSettings ModSettings { get; }
+        private bool currentHide;
 
         public ZoneHelper(ModContentPack content) : base(content)
         {
@@ -24,7 +25,7 @@
             }
 
             this.ModSettings = this.GetSettings<ZoneHelperSettings>();
-            CustomFilters.HideBuiltin = this.ModSettings.HideBuiltinFilters;
+            this.currentHide = this.ModSettings.HideBuiltinFilters;
 
             Log.Message($"Injecting {Assembly.GetExecutingAssembly().FullName}...");
             var harmony = new Harmony("Albrecht.Dan.ZoneHelper");
@@ -56,9 +57,11 @@
 
         public override void WriteSettings()
         {
-            if (CustomFilters.HideBuiltin != this.ModSettings.HideBuiltinFilters)
+            if (this.currentHide != this.ModSettings.HideBuiltinFilters)
             {
                 Log.Message($"Changed to {this.ModSettings.HideBuiltinFilters}");
+                this.currentHide = this.ModSettings.HideBuiltinFilters;
+                CustomFilters.SetHidden(this.currentHide);
             }
 
             base.WriteSettings();

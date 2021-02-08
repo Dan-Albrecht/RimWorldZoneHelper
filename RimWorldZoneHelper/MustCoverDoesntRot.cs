@@ -5,9 +5,14 @@
 
     public class MustCoverDoesntRot : SpecialThingFilterWorker
     {
-        public static bool Matches(ThingDef thingDef)
+        internal static bool Matches(ThingDef thingDef)
         {
             if (thingDef == null)
+            {
+                return false;
+            }
+
+            if (RottableFilter.Matches(thingDef))
             {
                 return false;
             }
@@ -37,12 +42,17 @@
                 return false;
             }
 
-            if (RottableFilter.Matches(t.def))
-            {
-                return false;
-            }
-
             return Matches(t.def);
+        }
+
+        public override bool AlwaysMatches(ThingDef def)
+        {
+            return Matches(def);
+        }
+
+        public override bool CanEverMatch(ThingDef def)
+        {
+            return Matches(def);
         }
     }
 }

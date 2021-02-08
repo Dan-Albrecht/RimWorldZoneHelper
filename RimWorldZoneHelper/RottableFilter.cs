@@ -5,16 +5,6 @@
 
     public class RottableFilter : SpecialThingFilterWorker
     {
-        public static bool Matches(ThingDef thingDef)
-        {
-            if (thingDef == null)
-            {
-                return false;
-            }
-
-            return thingDef.GetCompProperties<CompProperties_Rottable>() != null;
-        }
-
         public override bool Matches(Thing t)
         {
             if (t == null)
@@ -27,12 +17,22 @@
 
         public override bool AlwaysMatches(ThingDef def)
         {
-            return false;
+            return Matches(def);
         }
 
         public override bool CanEverMatch(ThingDef def)
         {
-            return true;
+            return Matches(def);
+        }
+
+        internal static bool Matches(ThingDef def)
+        {
+            if (def == null)
+            {
+                return false;
+            }
+
+            return def.GetCompProperties<CompProperties_Rottable>() != null;
         }
     }
 }
