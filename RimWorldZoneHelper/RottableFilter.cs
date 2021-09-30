@@ -17,11 +17,13 @@
 
         public override bool AlwaysMatches(ThingDef def)
         {
+            Helpers.LogOnce($"{nameof(RottableFilter)}.{nameof(AlwaysMatches)}");
             return Matches(def);
         }
 
         public override bool CanEverMatch(ThingDef def)
         {
+            Helpers.LogOnce($"{nameof(RottableFilter)}.{nameof(CanEverMatch)}");
             return Matches(def);
         }
 
