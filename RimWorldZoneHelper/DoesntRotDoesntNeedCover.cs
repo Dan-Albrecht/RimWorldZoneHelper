@@ -20,9 +20,11 @@
 
             if (RottableFilter.Matches(t.def))
             {
-                Log.Message($"Check it: {t}");
+                Helpers.LogOnce($"Check it: {t.def}");
+
                 // See if this is fully rotted at which point it cannot get any worse and we can put it in this zone
-                Debugger.Break();
+                Log.Message($"Check it: {t}");
+
                 return false;
             }
 

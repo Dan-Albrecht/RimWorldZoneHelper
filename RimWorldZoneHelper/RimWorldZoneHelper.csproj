@@ -3,7 +3,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net472</TargetFramework>
-    <NoWarn>$(NoWarn);</NoWarn>
     <AnalysisLevel>latest</AnalysisLevel>
   </PropertyGroup>
 
@@ -26,12 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="2.0.4" />
+    <PackageReference Include="Lib.Harmony" Version="2.1.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="16.8.55">
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.63">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -49,7 +48,7 @@
     </None>
   </ItemGroup>
 
-  <Target Name="VerifyProperties" BeforeTargets="Build" Condition="'$(RimWorldDir)' == ''">
+  <Target Name="VerifyProperties" BeforeTargets="BeforeBuild" Condition="'$(RimWorldDir)' == ''">
     <!-- Set this in an external Directory.Build.props so it doesn't need to be commited to repo with your personal path. -->
     <Error Text="The property RimWorldDir must be defined. It should be the full path to your installation of RimWorld. E.g. C:\Program Files (x86)\Steam\steamapps\common\RimWorld" />
   </Target>
