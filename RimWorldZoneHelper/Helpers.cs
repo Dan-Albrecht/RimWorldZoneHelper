@@ -20,5 +20,14 @@
                 Log.Message(message);
             }
         }
+
+        public static void LogOnceError(string message)
+        {
+            // Good enough
+            if (hashes.TryAdd(message.GetHashCode(), null))
+            {
+                Log.Error(message);
+            }
+        }
     }
 }

@@ -28,9 +28,9 @@
 
             ThingCategoryDef rootCategory = ThingCategoryDefOf.Root;
 
-            AddFilter(rootCategory, "AllowFrozen", "Things that must be frozen to last indefinitely", "must be frozen & covered", "allowFrozen", typeof(RottableFilter));
-            AddFilter(rootCategory, "AllowCovered", "Things that must be covered to last indefinitely", "must be convered", "allowCovered", typeof(MustCoverDoesntRot));
-            AddFilter(rootCategory, "AllowAnywhere", "Things that can be placed anywhere and will last indefinitely or are already ruined (rotten / desicated)", "no storage restrictions", "allowAnywhere", typeof(DoesntRotDoesntNeedCover));
+            AddFilter(rootCategory, "AllowFrozen", "Things that must be frozen to last indefinitely", "must be frozen & covered", "allowFrozen", typeof(MustBeFrozen));
+            AddFilter(rootCategory, "AllowCovered", "Things that must be covered to last indefinitely", "must be convered", "allowCovered", typeof(MustBeCovered));
+            AddFilter(rootCategory, "AllowAnywhere", "Things that can be placed anywhere and will last indefinitely or are already ruined (rotten / desicated)", "no storage restrictions", "allowAnywhere", typeof(CanBeAnywhere));
 
             SetHidden(ZoneHelper.Instnace.ModSettings.HideBuiltinFilters);
         }

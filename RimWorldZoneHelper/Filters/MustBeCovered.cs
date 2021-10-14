@@ -3,16 +3,18 @@
     using RimWorld;
     using Verse;
 
-    public class MustCoverDoesntRot : SpecialThingFilterWorker
+    public class MustBeCovered : SpecialThingFilterWorker
     {
-        internal static bool Matches(ThingDef thingDef)
+        internal static bool MatchesInternal(Thing thing)
         {
+            ThingDef thingDef = thing?.def;
+
             if (thingDef == null)
             {
                 return false;
             }
 
-            if (RottableFilter.Matches(thingDef))
+            if (MustBeFrozen.MatchesInternal(thing))
             {
                 return false;
             }
@@ -37,24 +39,7 @@
 
         public override bool Matches(Thing t)
         {
-            if (t == null)
-            {
-                return false;
-            }
-
-            return Matches(t.def);
-        }
-
-        public override bool AlwaysMatches(ThingDef def)
-        {
-            Helpers.LogOnce($"{nameof(MustCoverDoesntRot)}.{nameof(AlwaysMatches)}");
-            return Matches(def);
-        }
-
-        public override bool CanEverMatch(ThingDef def)
-        {
-            Helpers.LogOnce($"{nameof(MustCoverDoesntRot)}.{nameof(CanEverMatch)}");
-            return Matches(def);
+            return MatchesInternal(t);
         }
     }
 }
