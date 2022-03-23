@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" >
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -54,7 +54,6 @@
   </Target>
 
   <Target Name="AssembleDrop" AfterTargets="Build">
-    <Message Importance="high" Text="Assemblying build drop..." />
     <ItemGroup>
       <AboutFiles Include="About\*" />
       <Assemblies Include="$(OutDir)\*.dll" />
@@ -63,6 +62,7 @@
     <PropertyGroup>
       <DropDir>$(RimWorldDir)\Mods\$(TargetName)</DropDir>
     </PropertyGroup>
+    <Message Importance="high" Text="Copying build drop to $(DropDir)..." />
     <Copy SourceFiles="@(AboutFiles)" DestinationFolder="$(DropDir)\About\%(RecursiveDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(Assemblies)" DestinationFolder="$(DropDir)\v1.1\Assemblies\%(RecursiveDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="LoadFolders.xml" DestinationFolder="$(DropDir)" SkipUnchangedFiles="true" />

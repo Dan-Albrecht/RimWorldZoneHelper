@@ -1,9 +1,19 @@
 ﻿namespace RimWorldZoneHelper
 {
     using System;
+    using System.Collections.Generic;
     using HarmonyLib;
     using RimWorld;
     using Verse;
+
+    [HarmonyPatch(typeof(GenRecipe), "MakeRecipeProducts")]
+    public static class SometingElse
+    {
+        public static void Prefix()
+        {
+            Helpers.LogOnce("I got called");
+        }
+    }
 
     [HarmonyPatch(typeof(ThingCategoryNodeDatabase), "FinalizeInit")]
     public static class CustomFilters

@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.Build.NoTargets/3.2.14">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MonoBins Include="$(MonoSource)\mono-2.0-bdwgc.???" />
+    <MonoBins Include="$(MonoSource)\MonoPosixHelper.???" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <MbeDir>$(RimWorldDir)\MonoBleedingEdge\EmbedRuntime\</MbeDir>
+  </PropertyGroup>
+
+  <Target Name="VerifyProperties" BeforeTargets="BeforeBuild" Condition="'$(RimWorldDir)' == ''">
+    <!-- Set this in an external Directory.Build.props so it doesn't need to be commited to repo with your personal path. -->
+    <Error Text="The property RimWorldDir must be defined. It should be the full path to your installation of RimWorld. E.g. C:\Program Files (x86)\Steam\steamapps\common\RimWorld" />
+  </Target>
+
+  <Target Name="VerifyProperties" BeforeTargets="BeforeBuild" Condition="'$(MonoSource)' == ''">
+    <!-- Set this in an external Directory.Build.props so it doesn't need to be commited to repo with your personal path. -->
+    <Error Text="The property MonoSource must be defined. It should be the full path to your installation of RimWorld. E.g. C:\Program Files (x86)\Steam\steamapps\common\RimWorld" />
+  </Target>
+
+  <Target Name="PatchMono"  BeforeTargets="AfterBuild"
+          Condition="'$(MonoSource)' != ''" Inputs="@(MonoBins)" Outputs="@(MonoBins->'$(MbeDir)%(Filename)%(Extension)')">
+    <Message Importance="high" Text="Copying patched mono binaries from $(MonoSource) to $(MbeDir)..." />
+    <Copy SourceFiles="@(MonoBins)" DestinationFiles="@(MonoBins->'$(MbeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

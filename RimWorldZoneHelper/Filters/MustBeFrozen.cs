@@ -33,11 +33,25 @@
             }
 
             string mes = $"DefName: {def.defName} DTD: {prop.daysToDessicated} DTRS: {prop.daysToRotStart} DDPD: {prop.dessicatedDamagePerDay} DIH: {prop.disableIfHatcher} RDPD: {prop.rotDamagePerDay} RD: {prop.rotDestroys} TTD: {prop.TicksToDessicated} TTRS: {prop.TicksToRotStart}";
-            Helpers.LogOnce(mes);
 
-            if(thing.IsDessicated())
+            if (thing.IsDessicated())
             {
                 // No point of freezing this anymore
+                Helpers.LogOnce($"Dessicated: {mes}");
+                return false;
+            }
+
+            if (thing.MaxHitPoints >= 0 && thing.HitPoints == 0)
+            {
+                // Thing is broken now; what does this even mean
+                Helpers.LogOnce($"Destroyed: {mes}");
+                return false;
+            }
+
+            if(thing.MarketValue == 0 && thing.RoyalFavorValue == 0)
+            {
+                // No one will pay anything for this
+                Helpers.LogOnce($"Worthless: {mes}");
                 return false;
             }
 
